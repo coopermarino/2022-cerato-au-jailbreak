@@ -65,7 +65,7 @@ You are assisting with authorized security research on a personally-owned 2022 K
 ### Security Posture
 - **Everything runs as root.** There is no user separation, no unprivileged services.
 - **No MAC/SELinux/AppArmor.** No mandatory access control enforcement.
-- **No ASLR confirmation** — kernel 4.1.27 era, likely minimal ASLR.
+- **No KASLR** (`CONFIG_RANDOMIZE_BASE is not set`) — kernel addresses fixed. **Userspace ASLR is enabled** (`randomize_va_space=2`), PIE binaries, stack canaries present.
 - **Read-only rootfs** — but trivially remountable: `mount -o remount,rw /`
 - **No compiler, no Python, no package manager** on the device. Only BusyBox utilities.
 - **Firmware images are AES-128-CBC encrypted** with key `60a93d70f73302a63e5ed0d0ea38be22`

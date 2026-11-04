@@ -126,7 +126,9 @@ PoC files for libebml: `exploits/mkv/`. Firmware chain exploit: `exploits/` (3 v
 
 | Enabler | Impact |
 |---------|--------|
-| **No KASLR** | `CONFIG_RANDOMIZE_BASE is not set` — all addresses fixed |
+| **No KASLR** | `CONFIG_RANDOMIZE_BASE is not set` — kernel addresses fixed |
+| **Userspace ASLR enabled** | `randomize_va_space=2` — heap/stack/mmap randomized |
+| **PIE + stack canaries** | Shared objects are PIE, `fs:0x28` canary enabled |
 | **KALLSYMS_ALL=y** | `/proc/kallsyms` exposes every kernel symbol |
 | **DEVKMEM=y** | Direct kernel memory read/write via `/dev/kmem` |
 | **CONFIG_MODULES=y** | Loadable kernel modules post-exploitation |
@@ -140,7 +142,7 @@ PoC files for libebml: `exploits/mkv/`. Firmware chain exploit: `exploits/` (3 v
 Prioritized attack plan: **[EXPLOIT_STRATEGY.md](EXPLOIT_STRATEGY.md)**
 
 ### Priority 1: ASF Zero-Days via USB `.wma`
-True zero-days, no CVE, no patch. Heap over-read + integer underflow compound to heap overflow. glibc 2.25 + no ASLR = ideal conditions. PoC files built and hardware-confirmed.
+True zero-days, no CVE, no patch. Heap over-read + integer underflow compound to heap overflow. glibc 2.25 (pre-tcache) but userspace ASLR is on — need an info leak for reliable exploitation. PoC files built and hardware-confirmed crashing.
 
 ### Priority 2: libebml Heap Overflow via USB `.mkv`
 CVE-2021-3405, unpatched. Heap overflow in `EbmlString::ReadData()`. PoC files built.
@@ -306,7 +308,8 @@ VM details: **[vm/README.md](vm/README.md)**
 | **Encryption** | Fully broken — hardcoded AES key shared across all HKMC units |
 | **Zero-days** | 3 in lms_asf.so (heap overread, int underflow, missing check) |
 | **Unpatched CVEs** | 3 libebml + 1 firmware chain = 4 total |
-| **ASLR** | Disabled (`CONFIG_RANDOMIZE_BASE is not set`) |
+| **KASLR** | Disabled (`CONFIG_RANDOMIZE_BASE is not set`) — kernel addresses fixed |
+| **Userspace ASLR** | Enabled (`randomize_va_space=2`) — heap/stack/libs randomized |
 | **Privileges** | Everything runs as root, no MAC enforcement |
 | **SSH** | Hardcoded LGE dev RSA key from 2018 baked into rootfs |
 | **Root password** | SHA-512 hash in `shadow.Global`, shared across all units |
