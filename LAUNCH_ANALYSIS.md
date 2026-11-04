@@ -33,10 +33,12 @@ Builds several paths from USB mount point:
 Calls `FUN_00134870` twice:
 - Uses RSA public key at `/app/share/AppUpgrade/teruten5_pub.key`
 - Verifies stored signature/hash via `FUN_00221040` (mbedTLS RSA)
+- **We only have the public key, not the private key** — modified files cannot be re-signed
+- The only known bypass for this step is a TOCTOU attack (see [TOCTOU_ATTACK_PLAN.md](TOCTOU_ATTACK_PLAN.md))
 
 **Results from DLT logs:**
 ```
-errAppUpgrade = -400    ← signature check fails
+errAppUpgrade = -400    ← signature check fails (expected — no private key to re-sign)
 errXML        = -400    ← signature check fails (also seen: -404, 0)
 ```
 

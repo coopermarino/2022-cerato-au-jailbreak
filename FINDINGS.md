@@ -292,6 +292,8 @@ The update validation chain:
 .ver file (CRC32 checksums) → RSA signature check (mbedTLS + VElix_GetPubKey) → xcrypt decryption → tar extraction → flashing
 ```
 
+**RSA signature limitation**: We have the public key (`/app/share/AppUpgrade/teruten5_pub.key`) but not the private key. Modified firmware files cannot be re-signed. The only known bypass is a TOCTOU attack — serve genuine signed files during `checkHash`, then swap to modified files before extraction. See [TOCTOU_ATTACK_PLAN.md](TOCTOU_ATTACK_PLAN.md).
+
 ---
 
 ## 7. Bluetooth Attack Surface

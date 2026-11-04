@@ -61,12 +61,16 @@ diskutil eject /Volumes/KIAUSB
 
 ### AppDMClient rejects patched AppUpgrade (most likely failure)
 AppDMClient (on the currently installed rootfs) also RSA-verifies AppUpgrade
-before running it (CVE-2023-26244). If the 2024 firmware patched this CVE,
-AppDMClient will reject our modified AppUpgrade and the update won't start.
+before running it (CVE-2023-26244). We only have the public RSA key, not
+the private key, so we cannot re-sign the patched binary. If the firmware
+patched this CVE, AppDMClient will reject our modified AppUpgrade and the
+update won't start.
 
 **Symptoms**: Update fails immediately or very early, no hash check phase.
 
-**Fallback**: TOCTOU attack with Pi Zero USB gadget (see TOCTOU_ATTACK_PLAN.md).
+**Fallback**: TOCTOU attack with Pi Zero USB gadget — serve the genuine
+(properly signed) AppUpgrade during verification, swap to modified files
+before extraction. See [TOCTOU_ATTACK_PLAN.md](TOCTOU_ATTACK_PLAN.md).
 
 ### Patched AppUpgrade runs but something else fails
 The update process has many stages. If checkHash is bypassed but another

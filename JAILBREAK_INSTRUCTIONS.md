@@ -51,16 +51,21 @@ Attempt 2 uses a **properly re-encrypted** rootfs:
 6. SMACK relabeling → our payload executes → socat shell on port 4444
 7. After reboot with new rootfs → persistent shell service starts
 
-## Key uncertainty: RSA signature
+## Key limitation: RSA signature
 
 The reused trailer's RSA signature won't verify because:
 - It was signed over the original file's data, not ours
-- We don't have LGE's private key
+- We don't have LGE's private RSA key — only the public key at `/app/share/AppUpgrade/teruten5_pub.key`
+- The RSA-2048 signature cannot be forged without the private key
 
-**Why it should still work**: DecryptToPIPE streams decrypted data to stdout (pipe) as it reads. The RSA signature check (`FUN_00109d50`) runs AFTER all data is output. Even if it fails:
+**Potential bypass — TOCTOU (Time-of-Check-to-Time-of-Use):**
+
+`DecryptToPIPE` streams decrypted data to stdout (pipe) as it reads. The RSA signature check (`FUN_00109d50`) runs AFTER all data is output. Even if it fails:
 - The pipe already delivered valid gzip data
 - AppUpgrade may not check DecryptToPIPE's exit code (common for pipe commands)
 - The extraction is already complete
+
+A more reliable TOCTOU approach uses a Raspberry Pi Zero 2 W as a USB mass storage gadget — serve the genuine (properly signed) firmware during `checkHash` verification, then swap to the modified firmware before extraction reads it. There is a ~15 second window between hash pass and extraction. See [TOCTOU_ATTACK_PLAN.md](TOCTOU_ATTACK_PLAN.md) for details.
 
 **Risk**: If AppUpgrade does check the exit code and rolls back, the update fails. But the A/B partition scheme means the current system is preserved.
 

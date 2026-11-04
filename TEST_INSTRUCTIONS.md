@@ -102,7 +102,7 @@ diskutil eject /Volumes/KIAUSB
 - "Update file is incomplete" or "invalid" error early
 - "Update failed" message
 - Head unit reboots to the previous (working) partition
-- Error -403 in logs (RSA signature failure caught before extraction)
+- Error -403 in logs (RSA signature failure — we don't have the private key to re-sign)
 
 ### How to verify the jailbreak worked (NO network needed):
 
@@ -152,7 +152,10 @@ cp /Users/coopermarino/Downloads/NaU/2022_Cerato_AU/2022_Cerato_AU.ver.bak \
 
 ## If this approach fails: Next steps
 
-- **TOCTOU race**: Use a Raspberry Pi Zero 2 W as USB gadget to serve genuine
-  files during verification and modified files during extraction (see TOCTOU_ATTACK_PLAN.md)
+- **TOCTOU race (most promising firmware bypass)**: Use a Raspberry Pi Zero 2 W as USB
+  gadget to serve genuine (properly signed) files during verification and swap to modified
+  files before extraction. This bypasses the RSA signature problem since we don't have
+  the private key — the genuine file passes checkHash, then our modified file gets
+  extracted. See [TOCTOU_ATTACK_PLAN.md](TOCTOU_ATTACK_PLAN.md)
 - **GStreamer overflow**: Try CVE-2026-2920 WMA PoCs for memory corruption → RCE
 - **libebml overflow**: Try MKV PoCs for heap overflow in PlayerEngine

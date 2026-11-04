@@ -310,7 +310,7 @@ VM details: **[vm/README.md](vm/README.md)**
 | **Privileges** | Everything runs as root, no MAC enforcement |
 | **SSH** | Hardcoded LGE dev RSA key from 2018 baked into rootfs |
 | **Root password** | SHA-512 hash in `shadow.Global`, shared across all units |
-| **Firmware signing** | RSA-2048 via Teruten, but TOCTOU in DecryptToPIPE |
+| **Firmware signing** | RSA-2048 via Teruten — we have the public key only, not the private key. TOCTOU may bypass this |
 | **USB automount** | Safe — uses `mount()` syscall, not `system()` |
 | **Kernel BT** | `CONFIG_BT` not set — all kernel BT CVEs inapplicable |
 
