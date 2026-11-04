@@ -1,0 +1,71 @@
+# ── Large firmware images (keep locally, too big for git) ──
+HU/images/mango-rootfs.tar.gz
+HU/images/new_gui.tar.gz
+HU/images/mango-rwdata.tar.gz
+HU/images/iasImage*
+HU/images/navi_au/
+HU/images/vrau/
+HU/images/vreu/
+HU/firmware/
+mango-rootfs-patched-encrypted.tar.gz
+mango-rootfs.tar.gz.encrypted.bak
+2022_Cerato_AU.ver.bak
+
+# ── VM disk images (generated, rebuild with vm_boot_au.py prepare) ──
+vm/images/
+vm/bootable/
+vm/alpine_extracted/
+vm/runs/
+*.img
+*.iso
+*.overlay
+
+# ── Binaries ──
+AppUpgrade
+AppUpgrade.patched
+
+# VulnClaw (separate project with own repo)
+VulnClaw/
+vulnclaw-output/
+
+# ── Head unit logs (1.3GB, keep locally) ──
+headunit_logs/
+
+# ── macOS ──
+.DS_Store
+**/.DS_Store
+
+# ── Python ──
+__pycache__/
+*.pyc
+
+# ── Build artifacts ──
+*.o
+*.dSYM/
+
+# ── Compiled binaries (rebuild from source) ──
+exploits/bluetooth/bt_phone_emulator
+exploits/bluetooth/bt_connect
+exploits/bluetooth/BTExploit.app/
+exploits/payload/fb_pwn
+exploits/payload/fb_raw.bin
+exploits/payload/fb_raw.bin.gz
+exploit/fb_pwn
+exploit/asf_poc/
+exploit/gst_asf_poc/
+exploit/mkv_poc/
+exploit/bin/
+exploit/fw_repack/
+exploit/usb_payload/
+exploit/usb_payload.plaintext/
+usb_exploit/crash_poc.mp4
+usb_exploit/crash_poc_big.mp4
+usb_exploit/exploit.mp4
+usb_exploit/usb_package/
+usb_exploit/music/
+
+# ── Claude settings ──
+.claude/
+
+# ── Unrelated ──
+printer-assessment-2026-11-03.md

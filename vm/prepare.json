@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "container": "/private/tmp/claude-501/-Users-coopermarino-Downloads-NaU-2022-Cerato-AU/c11cf8bb-3b8c-465d-9b85-91a4b9871652/scratchpad/vm_setup/iasImage.decrypted",
+  "container_sha256": "fddd42807f07ae72c0d7bd99306ba706b157e52e1e6f12c861fb575262806725",
+  "busybox_sha256": "6e123e7f3202a8c1e9b1f94d8941580a25135382b99e8d3e34fb858bba311348",
+  "mkfs_command": [
+    "/opt/homebrew/opt/e2fsprogs/sbin/mkfs.ext4",
+    "-F",
+    "-b",
+    "4096",
+    "-I",
+    "256",
+    "-O",
+    "none,has_journal,ext_attr,resize_inode,dir_index,filetype,extent,flex_bg,sparse_super,large_file,huge_file,dir_nlink,extra_isize",
+    "-E",
+    "lazy_itable_init=0,lazy_journal_init=0",
+    "-d",
+    "/private/tmp/claude-501/-Users-coopermarino-Downloads-NaU-2022-Cerato-AU/c11cf8bb-3b8c-465d-9b85-91a4b9871652/scratchpad/vm_setup/bootable/rootfs-tree",
+    "/private/tmp/claude-501/-Users-coopermarino-Downloads-NaU-2022-Cerato-AU/c11cf8bb-3b8c-465d-9b85-91a4b9871652/scratchpad/vm_setup/bootable/rootfs.img"
+  ],
+  "synthetic_seeds": true,
+  "display_probe": null,
+  "sha256": {
+    "bzImage": "d6014762bdbac7e0b25a84bc81d5c57f299f8e90c9ebfeaaae3f5dd23ebd6c0e",
+    "rootfs.img": "012ffe33f2bf04db8d2a282dce90ece5f610d6a8aac77b8f84ef2b93a5b97230",
+    "manifest.bin": "d282155bfed37b20a7222bb3e9d21a7c8618eaab88f7644f5770f35bdd90ef2d",
+    "seed_dev.bin": "a5112d84e63962066e1d2ad290e0a9f1f2e806c56df15b6a10681aa532ecd7ca",
+    "seed_user.bin": "9706e118d96d4ac08ee34ff276330d01db646aeb5356cd88ea8ef05099f9c50c"
+  }
+}

@@ -1,0 +1,16 @@
+#!/bin/busybox sh
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+BB=/bin/busybox
+$BB mount -t proc proc /proc
+$BB mount -t sysfs sysfs /sys
+$BB mount -t devtmpfs devtmpfs /dev 2>/dev/null || true
+$BB mkdir -p /sys/fs/smackfs
+$BB mount -t smackfs smackfs /sys/fs/smackfs 2>/dev/null || true
+$BB --install -s /bin
+$BB --install -s /sbin 2>/dev/null || true
+$BB uname -a
+$BB cat /proc/mounts
+echo IONIQ_VM_USERSPACE_READY
+# This is a research shell, not the infotainment interface.
+export PS1='ioniq-vm# '
+exec $BB sh
